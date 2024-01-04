@@ -1,0 +1,27 @@
+version: "3"
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    #ports:
+    #  - "32400:32400"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Lima
+      - VERSION=docker
+      #- PLEX_CLAIM= #optional
+    volumes:
+      - /mnt/volume/plex-raspberry/plex-config:/config
+      - /mnt/volume/plex-raspberry/downloads/tv:/tv
+      - /mnt/volume/plex-raspberry/downloads/movies:/movies
+    restart: unless-stopped
+  jdownloader-2:
+    image: jlesage/jdownloader-2
+    network_mode: host
+    #ports:
+    #  - "5800:5800"
+    volumes:
+      - "/mnt/volume/plex-raspberry/jdownloader-2-config:/config:rw"
+      - "/mnt/volume/plex-raspberry/downloads:/output:rw"
